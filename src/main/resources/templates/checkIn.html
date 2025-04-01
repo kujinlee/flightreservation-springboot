@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Check-In</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <h2>Check-In</h2>
+    <form th:action="@{/completeCheckIn}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <input type="hidden" name="reservationId" th:value="${reservation.id}"/>
+        <label>Number of Bags:<input type="number" name="numberOfBags"/></label>
+        <input type="submit" value="Check-In"/>
+    </form>
+</body>
+</html>

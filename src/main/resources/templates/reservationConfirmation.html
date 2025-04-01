@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Confirmation</title>
+</head>
+<body>
+    <h2>Reservation Confirmation</h2>
+    <p th:utext="${msg}"></p> <!-- Use th:utext to render HTML content -->
+    <a th:href="@{'/showCheckIn?reservationId=' + ${reservation.id}}">Proceed to Check-In</a>
+</body>
+</html>

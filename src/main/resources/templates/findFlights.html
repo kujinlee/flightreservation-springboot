@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Find Flights</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+    <h2>Find Flights:</h2>
+    <form th:action="@{/findFlights}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+        <label for="from">From:</label>
+        <input type="text" id="from" name="from" required pattern="[A-Za-z\s]{1,20}">
+        <br>
+        <label for="to">To:</label>
+        <input type="text" id="to" name="to" required pattern="[A-Za-z\s]{1,20}">
+        <br>
+        <label for="departureDate">Departure Date:</label>
+        <input type="date" id="departureDate" name="departureDate" required pattern="\d{4}-\d{2}-\d{2}">
+        <br>
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>
