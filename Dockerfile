@@ -13,8 +13,11 @@ COPY entrypoint.sh .
 # Make the entrypoint script executable
 RUN chmod +x entrypoint.sh
 
-# Expose the application port
-EXPOSE 8081
+# Copy the certs directory into the container
+COPY certs /app/certs
+
+# Expose the application port (HTTPS)
+EXPOSE ${APP_PORT}
 
 # Copy the JAR file into the container
 COPY target/flightreservation-0.0.1-SNAPSHOT.jar /app/flightreservation.jar

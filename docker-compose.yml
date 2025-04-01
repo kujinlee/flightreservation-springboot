@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      # Map host port to container port
+      # Map host port to container port (HTTPS)
       - "${APP_PORT}:${APP_PORT}"
     depends_on:
       - db
@@ -36,10 +36,12 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       # Configurable profile (dev, test, or prod by .env)
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      KEY_STORE_PATH: /app/certs/keystore.p12
+      KEY_STORE_PASSWORD: ${KEY_STORE_PASSWORD} # Add the keystore password
     working_dir: /app
     restart: on-failure
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:${APP_PORT}/actuator/health"]
+      test: ["CMD", "curl", "-f", "https://localhost:${APP_PORT}/actuator/health", "-k"]
       interval: 10s
       timeout: 5s
       retries: 3

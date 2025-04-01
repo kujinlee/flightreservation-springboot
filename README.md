@@ -13,6 +13,7 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 - [Environment Variables](#environment-variables)
 - [Configuration Files](#configuration-files)
 - [Endpoints](#endpoints)
+- [HTTP and HTTPS Ports](#http-and-https-ports)
 - [License](#license)
 
 ## Prerequisites
@@ -43,19 +44,23 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
     SPRING_DATASOURCE_PASSWORD=<your password>
     MYSQL_HOST=localhost
     SPRING_PROFILES_ACTIVE=dev
-    APP_PORT=8081
+    APP_PORT=8443
+    HTTP_PORT=8080
+    KEY_STORE_PASSWORD=<your keystore password>
+    KEY_STORE_PATH=certs/keystore.p12
     ```
 
     ### Dockerized Environment
     The `docker-compose.yml` file automatically sets the following environment variables for Dockerized environments:
     ```yaml
       APP_PORT: ${APP_PORT}
-      # Set to container name 'db' for Dockerized environments
+      HTTP_PORT: ${HTTP_PORT}
       MYSQL_HOST: db
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      # Configurable profile (dev, test, or prod by .env)
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      KEY_STORE_PATH: /app/certs/keystore.p12
+      KEY_STORE_PASSWORD: ${KEY_STORE_PASSWORD}
     ```
 
 3. Ensure MySQL is running locally if you plan to run the application on localhost.
@@ -73,6 +78,8 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
     ```bash
     export SPRING_DATASOURCE_USERNAME=root
     export SPRING_DATASOURCE_PASSWORD=<your password>
+    export KEY_STORE_PASSWORD=<your keystore password>
+    export KEY_STORE_PATH=certs/keystore.p12
     ```
 
 3. Build and run the application:
@@ -83,7 +90,7 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 
 4. Access the application at:
     ```
-    http://localhost:8081/flightreservation-springboot
+    https://localhost:8443/flightreservation-springboot
     ```
 
 ### Running in Docker
@@ -95,7 +102,7 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 
 2. Access the application at:
     ```
-    http://localhost:8081/flightreservation-springboot
+    https://localhost:8443/flightreservation-springboot
     ```
 
 3. Stop the containers when done:
@@ -149,12 +156,22 @@ SPRING_PROFILES_ACTIVE=dev
 ## Endpoints
 
 - **Base URL**:
-  - Localhost: `http://localhost:8081/flightreservation-springboot`
-  - Docker: `http://localhost:8081/flightreservation-springboot`
+  - Localhost: `https://localhost:8443/flightreservation-springboot`
+  - Docker: `https://localhost:8443/flightreservation-springboot`
 
 - **Actuator Endpoints**:
   - Health: `/actuator/health`
   - Mappings: `/actuator/mappings`
+
+## HTTP and HTTPS Ports
+
+- **HTTP Port**: The application listens on port `8080` for HTTP traffic by default. This port is used to redirect HTTP requests to HTTPS.
+- **HTTPS Port**: The application listens on port `8443` for HTTPS traffic. This port is configured using the `APP_PORT` environment variable.
+
+To change the HTTP port, set the `HTTP_PORT` environment variable in the `.env` file:
+```properties
+HTTP_PORT=8081
+```
 
 ## License
 

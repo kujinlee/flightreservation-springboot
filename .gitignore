@@ -35,3 +35,6 @@ mysql-data
 
 # macOS system files
 .DS_Store
+
+# SSL certificates
+certs/

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Load environment variables from .env
-export $(cat .env | xargs)
+# Load environment variables from .env, ignoring comments and blank lines
+export $(grep -v '^#' .env | grep -v '^$' | xargs)
 
 # Set the profile dynamically (default to 'dev' if no argument is provided)
 SPRING_PROFILES_ACTIVE=${1:-dev}
