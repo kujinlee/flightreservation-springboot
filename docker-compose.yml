@@ -9,8 +9,10 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-data:/var/lib/mysql # Persist database data
-      - ./sql-scripts:/docker-entrypoint-initdb.d # Initialize database with SQL scripts
+      # Persist database data on the host machine
+      - ./mysql-data:/var/lib/mysql
+      # Initialize database schema and seed data
+      - ./sql-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -22,14 +24,18 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "${APP_PORT}:${APP_PORT}" # Map host port to container port
+      # Map host port to container port
+      - "${APP_PORT}:${APP_PORT}"
     depends_on:
       - db
     environment:
-      MYSQL_HOST: db # Set to container name 'db' for Dockerized environments
+      APP_PORT: ${APP_PORT}
+      # Set to container name 'db' for Dockerized environments
+      MYSQL_HOST: db
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE} # Configurable profile (dev, test, or prod by .env)
+      # Configurable profile (dev, test, or prod by .env)
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     working_dir: /app
     restart: on-failure
     healthcheck:

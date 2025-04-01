@@ -37,10 +37,10 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
     ### Local Development
     ```properties
     # Environment variables for local development
-    MYSQL_ROOT_PASSWORD=1234
+    MYSQL_ROOT_PASSWORD=<your password>
     MYSQL_DATABASE=reservation
     SPRING_DATASOURCE_USERNAME=root
-    SPRING_DATASOURCE_PASSWORD=1234
+    SPRING_DATASOURCE_PASSWORD=<your password>
     MYSQL_HOST=localhost
     SPRING_PROFILES_ACTIVE=dev
     APP_PORT=8081
@@ -49,13 +49,13 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
     ### Dockerized Environment
     The `docker-compose.yml` file automatically sets the following environment variables for Dockerized environments:
     ```yaml
-    MYSQL_ROOT_PASSWORD: 1234
-    MYSQL_DATABASE: reservation
-    SPRING_DATASOURCE_USERNAME: root
-    SPRING_DATASOURCE_PASSWORD: 1234
-    MYSQL_HOST: db
-    SPRING_PROFILES_ACTIVE: prod
-    APP_PORT: 8081
+      APP_PORT: ${APP_PORT}
+      # Set to container name 'db' for Dockerized environments
+      MYSQL_HOST: db
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      # Configurable profile (dev, test, or prod by .env)
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
     ```
 
 3. Ensure MySQL is running locally if you plan to run the application on localhost.
@@ -72,7 +72,7 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 2. Set the required environment variables:
     ```bash
     export SPRING_DATASOURCE_USERNAME=root
-    export SPRING_DATASOURCE_PASSWORD=1234
+    export SPRING_DATASOURCE_PASSWORD=<your password>
     ```
 
 3. Build and run the application:
