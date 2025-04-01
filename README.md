@@ -32,15 +32,30 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
     cd flightreservation-springboot
     ```
 
-2. Configure the `.env` file for Docker:
+2. Configure the `.env` file for local development or Docker:
 
+    ### Local Development
     ```properties
-    MYSQL_ROOT_PASSWORD=<your password>
+    # Environment variables for local development
+    MYSQL_ROOT_PASSWORD=1234
     MYSQL_DATABASE=reservation
-    SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/reservation
-    SPRING_DATASOURCE_USERNAME=<your database username>
-    SPRING_DATASOURCE_PASSWORD=<your password>
-    MYSQL_HOST=db
+    SPRING_DATASOURCE_USERNAME=root
+    SPRING_DATASOURCE_PASSWORD=1234
+    MYSQL_HOST=localhost
+    SPRING_PROFILES_ACTIVE=dev
+    APP_PORT=8081
+    ```
+
+    ### Dockerized Environment
+    The `docker-compose.yml` file automatically sets the following environment variables for Dockerized environments:
+    ```yaml
+    MYSQL_ROOT_PASSWORD: 1234
+    MYSQL_DATABASE: reservation
+    SPRING_DATASOURCE_USERNAME: root
+    SPRING_DATASOURCE_PASSWORD: 1234
+    MYSQL_HOST: db
+    SPRING_PROFILES_ACTIVE: prod
+    APP_PORT: 8081
     ```
 
 3. Ensure MySQL is running locally if you plan to run the application on localhost.
@@ -63,7 +78,7 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 3. Build and run the application:
     ```sh
     mvn clean install
-    mvn spring-boot:run
+    ./run.sh
     ```
 
 4. Access the application at:
@@ -92,46 +107,34 @@ This is a Flight Reservation System built with Spring Boot, Thymeleaf, and Docke
 
 Spring Profiles are used to manage environment-specific configurations. This project uses the following profiles:
 
-- **`local`**: For running the application on localhost.
-- **`docker`**: For running the application in a Docker container.
 - **`dev`**: For development environments.
 - **`test`**: For testing environments.
 - **`prod`**: For production environments.
 
 ### Switching Profiles
 
-- **Local**: No additional configuration is needed. The `local` profile is active by default.
-- **Docker**: The `docker` profile is activated automatically in the `docker-compose.yml` file.
 - **Development (`dev`)**: Activate the `dev` profile using:
   ```bash
-  SPRING_PROFILES_ACTIVE=dev mvn spring-boot:run
+  ./run.sh dev
   ```
 - **Testing (`test`)**: Activate the `test` profile using:
   ```bash
-  SPRING_PROFILES_ACTIVE=test mvn spring-boot:run
+  ./run.sh test
   ```
 - **Production (`prod`)**: Activate the `prod` profile using:
   ```bash
-  SPRING_PROFILES_ACTIVE=prod mvn spring-boot:run
+  ./run.sh prod
   ```
 
 ## Environment Variables
+### Environment Configuration
 
-### Local Development
-The `.env` file is used for local development. By default, the `dev` profile is active:
+The application uses the `.env` file to manage environment-specific configurations. You can set the desired Spring profile (`dev`, `test`, or `prod`) for both local development and Dockerized environments by modifying the `SPRING_PROFILES_ACTIVE` environment variable.
+
+By default, the `dev` profile is active for local development:
 ```properties
 SPRING_PROFILES_ACTIVE=dev
 ```
-
-### Dockerized Environment
-The `docker-compose.yml` file sets the `prod` profile for Dockerized environments:
-```yaml
-SPRING_PROFILES_ACTIVE: prod
-```
-
-### Behavior
-- When running locally, the application uses the `dev` profile.
-- When running in Docker, the application uses the `prod` profile.
 
 ## Configuration Files
 
